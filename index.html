@@ -1,13 +1,86 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
-<head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>VENVER — Built Different</title><link rel="stylesheet" href="style.css"></head>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>VENVER — Built Different</title>
+<link rel="stylesheet" href="style.css">
+</head>
 <body>
-<header><a class="brand" href="index.html">VENVER</a><nav><a href="#shop">SHOP</a><a href="#about">ABOUT</a><a href="cart.html">CART <span id="cartCount">0</span></a></nav></header>
-<main>
-<section class="hero"><div><p class="eyebrow">INDEPENDENT STREETWEAR · EST. 2026</p><h1>BUILT<br>DIFFERENT.</h1><p>Bold clothing. Strong identity. VENVER is built for people who wear their own style.</p><a class="btn" href="#shop">SHOP THE DROP</a></div><div class="hero-mark"><img src="images/hero-logo.png" alt="VENVER logo"></div></section>
-<section id="shop" class="shop"><p class="eyebrow">THE FIRST DROP</p><h2>SHOP</h2><div class="products">
-<article class="card"><div class="product-img product1"><img src="images/product1.jpg" alt="Abstract Camo Tee" onerror="this.style.display='none'"></div><div class="card-info"><div><h3>Abstract Camo Tee</h3><p>Cream/white tee with a grey-green abstract washed print.</p></div><strong>₹500</strong></div><div class="buyrow"><select id="size1"><option>XS</option><option>S</option><option>M</option><option>L</option><option selected>XL</option><option>XXL</option></select><div class="qty"><button data-qty="1">1</button><button data-qty="2">2</button><button data-qty="3">3</button><button data-qty="4">4</button><button data-qty="5">5</button><input id="custom1" type="number" min="1" placeholder="Custom"></div><button class="add" data-product="1">ADD</button></div></article>
-<article class="card"><div class="product-img"><img src="images/sample2.jpg" alt="Floral Frame Tee"></div><div class="card-info"><div><h3>Floral Frame Tee</h3><p>Dark floral frame graphic on a classic streetwear tee.</p></div><strong>₹500</strong></div><div class="buyrow"><select id="size2"><option>XS</option><option>S</option><option>M</option><option>L</option><option selected>XL</option><option>XXL</option></select><div class="qty"><button data-qty="1">1</button><button data-qty="2">2</button><button data-qty="3">3</button><button data-qty="4">4</button><button data-qty="5">5</button><input id="custom2" type="number" min="1" placeholder="Custom"></div><button class="add" data-product="2">ADD</button></div></article>
-</div></section>
-<section id="about" class="about"><p class="eyebrow">ABOUT VENVER</p><h2>WEAR YOUR<br>IDENTITY.</h2><p>VENVER is an independent clothing project starting with small drops and original designs.</p></section>
-</main><script src="script.js"></script></body></html>
+<header class="navbar">
+  <a class="brand" href="index.html">VENVER</a>
+  <nav>
+    <a href="#shop">SHOP</a>
+    <a href="#about">ABOUT</a>
+    <a href="cart.html">CART <span id="cartCount">0</span></a>
+  </nav>
+</header>
+
+<section class="hero">
+  <div class="hero-copy">
+    <p class="eyebrow">INDEPENDENT STREETWEAR · EST. 2026</p>
+    <h1>BUILT<br>DIFFERENT.</h1>
+    <p>Bold clothing. Strong identity. VENVER is built for people who wear their own style.</p>
+    <a class="button" href="#shop">SHOP THE DROP</a>
+  </div>
+  <div class="hero-panel">
+    <img src="images/hero-logo.png" alt="VENVER logo">
+  </div>
+</section>
+
+<section class="shop" id="shop">
+  <p class="eyebrow">THE FIRST DROP</p>
+  <h2>SHOP</h2>
+  <div class="products">
+    <article class="product-card">
+      <img src="images/product1.jpg" alt="Abstract Camo Tee">
+      <div class="product-info">
+        <div><h3>Abstract Camo Tee</h3><p>Cream/white with a grey-green abstract washed print.</p></div>
+        <strong>₹500</strong>
+      </div>
+      <div class="buy-row">
+        <label>SIZE<select><option>XL</option></select></label>
+        <div class="qty">
+          <button type="button" data-value="1">1</button>
+          <button type="button" data-value="2">2</button>
+          <button type="button" data-value="3">3</button>
+          <button type="button" data-value="4">4</button>
+          <button type="button" data-value="5">5</button>
+          <input type="number" min="1" value="1" aria-label="Quantity">
+        </div>
+        <button class="button add" data-key="camo">ADD</button>
+      </div>
+    </article>
+
+    <article class="product-card">
+      <img src="images/sample2.jpg" alt="Floral Frame Tee">
+      <div class="product-info">
+        <div><h3>Floral Frame Tee</h3><p>Dark floral frame graphic on a classic streetwear tee.</p></div>
+        <strong>₹500</strong>
+      </div>
+      <div class="buy-row">
+        <label>SIZE<select><option>XL</option></select></label>
+        <div class="qty">
+          <button type="button" data-value="1">1</button>
+          <button type="button" data-value="2">2</button>
+          <button type="button" data-value="3">3</button>
+          <button type="button" data-value="4">4</button>
+          <button type="button" data-value="5">5</button>
+          <input type="number" min="1" value="1" aria-label="Quantity">
+        </div>
+        <button class="button add" data-key="floral">ADD</button>
+      </div>
+    </article>
+  </div>
+</section>
+
+<section class="about" id="about">
+  <p class="eyebrow">ABOUT VENVER</p>
+  <h2>WEAR YOUR<br>IDENTITY.</h2>
+  <p>VENVER is an independent clothing project starting with small drops and original designs.</p>
+</section>
+
+<footer><strong>VENVER</strong><span>© 2026 VENVER</span></footer>
+<script src="script.js"></script>
+</body>
+</html>

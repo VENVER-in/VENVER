@@ -1,15 +1,51 @@
 const PRODUCTS={
-  1:{id:1,name:'Abstract Camo Tee',price:500,image:'images/product1.jpg'},
-  2:{id:2,name:'Floral Frame Tee',price:500,image:'images/sample2.jpg'}
+  camo:{name:"Abstract Camo Tee",price:500,size:"XL",image:"images/product1.jpg"},
+  floral:{name:"Floral Frame Tee",price:500,size:"XL",image:"images/sample2.jpg"}
 };
-const KEY='venverCartV2';
-let cart=JSON.parse(localStorage.getItem(KEY)||'[]');
-function save(){localStorage.setItem(KEY,JSON.stringify(cart));updateCount();}
-function updateCount(){const n=cart.reduce((s,i)=>s+i.qty,0);document.querySelectorAll('#cartCount').forEach(e=>e.textContent=n)}
-function getQty(id){const custom=document.getElementById('custom'+id);let q=custom&&custom.value?parseInt(custom.value):0;if(q>0)return q;const active=document.querySelector(`[data-product="${id}"]`)?.parentElement.querySelector('.qty button.active');return active?parseInt(active.dataset.qty):1}
-function add(id){const p=PRODUCTS[id];const size=document.getElementById('size'+id)?.value||'XL';const qty=Math.max(1,getQty(id));const key=id+'-'+size;const found=cart.find(x=>x.key===key);if(found)found.qty+=qty;else cart.push({key,id,size,qty});save();alert(`${qty} × ${p.name} added to cart.`)}
-function renderCart(){const box=document.getElementById('cartItems');if(!box)return;const empty=document.getElementById('cartEmpty'),content=document.getElementById('cartContent');if(!cart.length){empty.hidden=false;content.style.display='none';updateCount();return}empty.hidden=true;content.style.display='grid';box.innerHTML=cart.map((i,idx)=>{const p=PRODUCTS[i.id];return `<div class="cart-item"><img src="${p.image}" alt="${p.name}"><div><h3>${p.name}</h3><p>Size: ${i.size}</p><p>₹${p.price} each</p><div class="cart-controls"><button onclick="changeQty(${idx},-1)">−</button><input type="number" min="1" value="${i.qty}" onchange="setQty(${idx},this.value)"><button onclick="changeQty(${idx},1)">+</button><button class="remove" onclick="removeItem(${idx})">REMOVE</button></div></div><div class="line-total">₹${p.price*i.qty}</div></div>`}).join('');const subtotal=cart.reduce((s,i)=>s+PRODUCTS[i.id].price*i.qty,0);document.getElementById('subtotal').textContent='₹'+subtotal;document.getElementById('total').textContent='₹'+subtotal;updateCount()}
-function changeQty(idx,d){cart[idx].qty=Math.max(1,cart[idx].qty+d);save();renderCart()}
-function setQty(idx,v){const q=parseInt(v);cart[idx].qty=Math.max(1,isNaN(q)?1:q);save();renderCart()}
-function removeItem(idx){cart.splice(idx,1);save();renderCart()}
-document.addEventListener('click',e=>{const q=e.target.closest('[data-qty]');if(q){const wrap=q.closest('.qty');wrap.querySelectorAll('button').forEach(b=>b.classList.remove('active'));q.classList.add('active');const inp=wrap.querySelector('input');if(inp)inp.value=''}});document.querySelectorAll('.add').forEach(b=>b.addEventListener('click',()=>add(Number(b.dataset.product))));document.getElementById('checkout')?.addEventListener('click',()=>alert('Checkout will be connected to a real payment/order system when VENVER is ready to sell.'));updateCount();renderCart();
+
+function getCart(){try{return JSON.parse(sessionStorage.getItem("venverCart")||"[]")}catch{return[]}}
+function setCart(cart){sessionStorage.setItem("venverCart",JSON.stringify(cart))}
+function updateCount(){const n=getCart().reduce((s,i)=>s+i.quantity,0);document.querySelectorAll("#cartCount").forEach(e=>e.textContent=n)}
+
+document.querySelectorAll(".qty").forEach(box=>{
+  const input=box.querySelector("input");
+  box.querySelectorAll("button").forEach(b=>b.addEventListener("click",()=>input.value=b.dataset.value));
+});
+
+document.querySelectorAll(".add").forEach(btn=>{
+  btn.addEventListener("click",()=>{
+    const card=btn.closest(".product-card");
+    const qty=Math.max(1,Number(card.querySelector("input").value)||1);
+    const key=btn.dataset.key, p=PRODUCTS[key], cart=getCart();
+    const found=cart.find(i=>i.key===key);
+    if(found) found.quantity+=qty; else cart.push({key,quantity:qty,size:p.size});
+    setCart(cart); updateCount();
+    btn.textContent="ADDED ✓"; setTimeout(()=>btn.textContent="ADD",900);
+  });
+});
+
+function renderCart(){
+  const box=document.getElementById("items"); if(!box)return;
+  const cart=getCart(), empty=document.getElementById("empty"), layout=document.getElementById("layout");
+  if(!cart.length){empty.classList.remove("hidden");layout.classList.add("hidden");updateCount();return}
+  empty.classList.add("hidden");layout.classList.remove("hidden");box.innerHTML="";
+  let subtotal=0;
+  cart.forEach((item,index)=>{
+    const p=PRODUCTS[item.key], line=p.price*item.quantity; subtotal+=line;
+    const row=document.createElement("article"); row.className="cart-item";
+    row.innerHTML=`<img src="${p.image}" alt="${p.name}">
+      <div><p class="eyebrow">VENVER</p><h2>${p.name}</h2><p>Size: <strong>${item.size}</strong></p><p>₹${p.price} each</p>
+      <div class="controls"><button class="minus">−</button><input type="number" min="1" value="${item.quantity}"><button class="plus">+</button><button class="remove">REMOVE</button></div></div>
+      <strong>₹${line}</strong>`;
+    row.querySelector(".minus").onclick=()=>{item.quantity=Math.max(1,item.quantity-1);setCart(cart);renderCart()};
+    row.querySelector(".plus").onclick=()=>{item.quantity+=1;setCart(cart);renderCart()};
+    row.querySelector("input").onchange=e=>{item.quantity=Math.max(1,Number(e.target.value)||1);setCart(cart);renderCart()};
+    row.querySelector(".remove").onclick=()=>{cart.splice(index,1);setCart(cart);renderCart()};
+    box.appendChild(row);
+  });
+  document.getElementById("subtotal").textContent=`₹${subtotal}`;
+  document.getElementById("total").textContent=`₹${subtotal}`;
+  updateCount();
+}
+document.getElementById("checkout")?.addEventListener("click",()=>alert("Checkout is not active yet. We will connect real payments later."));
+updateCount(); renderCart();

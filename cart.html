@@ -1,3 +1,36 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>VENVER — Cart</title><link rel="stylesheet" href="style.css"></head><body>
-<header><a class="brand" href="index.html">VENVER</a><nav><a href="index.html#shop">SHOP</a><a href="index.html#about">ABOUT</a><a href="cart.html">CART <span id="cartCount">0</span></a></nav></header>
-<main class="cart-page"><p class="eyebrow">YOUR ORDER</p><h1>YOUR CART</h1><div id="cartEmpty" class="empty" hidden>Your cart is empty.<br><a class="btn" href="index.html#shop">SHOP THE DROP</a></div><div id="cartContent"><div id="cartItems"></div><aside class="summary"><h2>ORDER SUMMARY</h2><div><span>Subtotal</span><strong id="subtotal">₹0</strong></div><div><span>Shipping</span><span id="shipping">Calculated at checkout</span></div><hr><div class="total"><span>Total</span><strong id="total">₹0</strong></div><button class="btn checkout" id="checkout">CHECKOUT</button><p class="note">Demo checkout for now — payments and delivery can be connected later.</p></aside></div></main><script src="script.js"></script></body></html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>VENVER — Cart</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header class="navbar">
+  <a class="brand" href="index.html">VENVER</a>
+  <nav><a href="index.html#shop">SHOP</a><a href="index.html#about">ABOUT</a><a href="cart.html">CART <span id="cartCount">0</span></a></nav>
+</header>
+
+<main class="cart-page">
+  <p class="eyebrow">YOUR ORDER</p>
+  <h1>YOUR CART</h1>
+  <div id="empty" class="empty"><h2>Your cart is empty.</h2><a class="button" href="index.html#shop">CONTINUE SHOPPING</a></div>
+  <div id="layout" class="cart-layout hidden">
+    <section id="items" class="items"></section>
+    <aside class="summary">
+      <p class="eyebrow">ORDER SUMMARY</p>
+      <div><span>Subtotal</span><strong id="subtotal">₹0</strong></div>
+      <div><span>Shipping</span><span>Calculated at checkout</span></div>
+      <hr>
+      <div class="total"><span>Total</span><strong id="total">₹0</strong></div>
+      <button id="checkout" class="button full">CHECKOUT</button>
+      <p class="note">Demo checkout for now — payments and delivery can be connected later.</p>
+    </aside>
+  </div>
+</main>
+
+<footer><strong>VENVER</strong><span>© 2026 VENVER</span></footer>
+<script src="script.js"></script>
+</body>
+</html>
